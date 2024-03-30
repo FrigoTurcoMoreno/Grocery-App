@@ -82,7 +82,7 @@ fun HomeView(
                 contentAlignment = Alignment.BottomEnd
             ){
                 FloatingActionButton(
-                    onClick = { navHostController.navigate(Screen.AddProductScreen.route)},
+                    onClick = { navHostController.navigate(Screen.AddOrUpdateProductScreen.passId(0))},
                     containerColor = Green
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = "Show AddProductScreen")
@@ -154,7 +154,7 @@ private fun ProductCard(
                     horizontalArrangement = Arrangement.Center,
                 ){
                     IconButton(onClick = {
-                        navHostController.navigate(Screen.UpdateProductScreen.passId(product.id))
+                        navHostController.navigate(Screen.AddOrUpdateProductScreen.passId(product.id))
                     }) {
                         Icon(Icons.Filled.Edit, contentDescription = "Show UpdateScreenView")
                     }

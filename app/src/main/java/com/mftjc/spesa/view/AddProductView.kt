@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,12 +20,26 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.navigation.NavHostController
 import com.mftjc.spesa.model.Product
 import com.mftjc.spesa.viewmodel.ProductVm
+import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun AddProductView(vm: ProductVm, navHostController: NavHostController){
+fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int){
 
-    var name by remember { mutableStateOf("") }
-    var quantity by remember { mutableStateOf("") }
+    var product by remember { mutableStateOf(Product()) }
+    var name by remember { mutableStateOf(product.name) }
+    var quantity by remember { mutableStateOf(product.quantity) }
+    var title by remember { mutableStateOf("Inserisci Prodotto")}
+    var nameButton by remember { mutableStateOf("Inserisci")}
+
+    if (id != 0) {
+        LaunchedEffect(Dispatchers.IO) {
+            product = vm.getProduct(id)
+            name = product.name
+            quantity = product.quantity
+            title = "Modifica Prodotto"
+            nameButton = "Modifica"
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -58,13 +73,13 @@ fun AddProductView(vm: ProductVm, navHostController: NavHostController){
         }
         Button(
             onClick = {
-                val product = Product(name = name, quantity = quantity)
+                product = Product(name = name, quantity = quantity)
                 vm.insertOrUpdateProduct(product)
                 navHostController.popBackStack()
             },
             enabled = name.isNotBlank() && quantity.isNotBlank()
         ) {
-            Text(text = "Inserisci")
+            Text(text = nameButton)
         }
     }
 }
