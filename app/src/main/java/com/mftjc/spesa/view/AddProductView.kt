@@ -24,6 +24,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,15 +44,14 @@ import kotlinx.coroutines.Dispatchers
 @Composable
 fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int){
 
-    var product by remember { mutableStateOf(Product()) }
-    var name by remember { mutableStateOf(product.name) }
-    var quantity by remember { mutableStateOf(product.quantity) }
-    var title by remember { mutableStateOf("Inserisci Prodotto")}
-    var nameButton by remember { mutableStateOf("Inserisci")}
+    var name by remember { mutableStateOf("") }
+    var quantity by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf("Inserisci Prodotto") }
+    var nameButton by remember { mutableStateOf("Inserisci") }
 
     if (id != 0) {
         LaunchedEffect(Dispatchers.IO) {
-            product = vm.getProduct(id)
+            val product = vm.getProduct(id)
             name = product.name
             quantity = product.quantity
             title = "Modifica Prodotto"
@@ -115,7 +115,9 @@ fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, 
                 )
                 Button(
                     onClick = {
-                        product = Product(name = name, quantity = quantity)
+                        val product: Product =
+                            if (id == 0) Product(name = name, quantity = quantity)
+                            else Product(id = id, name = name, quantity = quantity)
                         vm.insertOrUpdateProduct(product)
                         navHostController.popBackStack()
                     },

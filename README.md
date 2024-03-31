@@ -8,7 +8,7 @@ Below are screenshots of the app's key screens:
 - ![Update Product Screen](https://raw.githubusercontent.com/FrigoTurcoMoreno/Grocery-App/main/imgs/Modify_Product.png)
 
 ## Latest Release
-The latest release can be downloaded from [![Download APK](https://img.shields.io/badge/Download-APK-brightgreen)](https://github.com/FrigoTurcoMoreno/Grocery-App/tree/main/app/release/grocery-app-v.1.3.apk).
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen)](https://github.com/FrigoTurcoMoreno/Grocery-App/releases/latest).
 
 ## Technologies Used
 - **Made in:** Kotlin
