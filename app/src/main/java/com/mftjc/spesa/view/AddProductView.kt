@@ -46,9 +46,9 @@ import kotlinx.coroutines.Dispatchers
 @Composable
 fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int){
 
-    val product = vm.getProduct(id).collectAsState(initial = Product()).value
-    var name by remember { mutableStateOf(product.name) }
-    var quantity by remember { mutableStateOf(product.quantity) }
+    var product = vm.getProduct(id).collectAsState(initial = Product()).value
+    var name by remember { mutableStateOf("") }
+    var quantity by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("Inserisci Prodotto") }
     var nameButton by remember { mutableStateOf("Inserisci") }
 
@@ -115,8 +115,14 @@ fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, 
                 )
                 Button(
                     onClick = {
-                        product.name = name
-                        product.quantity = quantity
+                        //if no product is found, it will be null
+                        if (product != null){
+                            product.name = name
+                            product.quantity = quantity
+                        }
+                        else {
+                            product = Product(name = name, quantity = quantity)
+                        }
                         vm.insertOrUpdateProduct(product)
                         navHostController.popBackStack()
                     },
