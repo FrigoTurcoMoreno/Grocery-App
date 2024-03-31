@@ -15,7 +15,7 @@ interface ProductDao {
 
 
     @Query("SELECT * FROM products WHERE id = :id")
-    suspend fun getProduct(id: Int): Product
+    fun getProduct(id: Int): Flow<Product>
 
 
     @Upsert

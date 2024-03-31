@@ -41,6 +41,7 @@ import com.mftjc.spesa.ui.theme.Green
 import com.mftjc.spesa.ui.theme.LightGreen
 import com.mftjc.spesa.ui.theme.LightWhite
 import com.mftjc.spesa.viewmodel.ProductVm
+import kotlinx.coroutines.flow.count
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +99,7 @@ private fun ShowListProducts(
     navHostController: NavHostController,
     vm: ProductVm
 ){
-    val products by vm.products.collectAsState(initial = emptyList())
+    val products by vm.getAllProducts().collectAsState(initial = emptyList())
 
     LazyColumn(
         verticalArrangement = Arrangement.Center,

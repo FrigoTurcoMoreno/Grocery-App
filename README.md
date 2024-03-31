@@ -8,7 +8,7 @@ Below are screenshots of the app's key screens:
 - ![Update Product Screen](https://raw.githubusercontent.com/FrigoTurcoMoreno/Grocery-App/main/imgs/Modify_Product.png)
 
 ## Latest Release
-[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen)](https://github.com/FrigoTurcoMoreno/Grocery-App/releases/latest).
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen)](https://github.com/FrigoTurcoMoreno/Grocery-App/releases/latest)
 
 ## Technologies Used
 - **Made in:** Kotlin
@@ -22,7 +22,6 @@ Below are screenshots of the app's key screens:
 
 ## Author
 Moreno Frigo Turco
-- [GitHub](https://github.com/FrigoTurcoMoreno)
-- [LinkedIn](https://www.linkedin.com/in/moreno-frigo-turco-4a423a294)
-- [Instagram](https://www.instagram.com/soy_mft_elprogramador)
-
+- [![GitHub Icon](https://img.icons8.com/material-outlined/24/000000/github.png)](https://github.com/FrigoTurcoMoreno) [GitHub](https://github.com/FrigoTurcoMoreno)
+- [![LinkedIn Icon](https://img.icons8.com/material-rounded/24/000000/linkedin.png)](https://www.linkedin.com/in/moreno-frigo-turco-4a423a294) [LinkedIn](https://www.linkedin.com/in/moreno-frigo-turco-4a423a294)
+- [![Instagram Icon](https://img.icons8.com/material-rounded/24/000000/instagram-new.png)](https://www.instagram.com/soy_mft_elprogramador) [Instagram](https://www.instagram.com/soy_mft_elprogramador)

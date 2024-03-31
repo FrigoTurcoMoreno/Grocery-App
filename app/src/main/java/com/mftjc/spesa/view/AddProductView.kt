@@ -23,6 +23,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -44,19 +46,17 @@ import kotlinx.coroutines.Dispatchers
 @Composable
 fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int){
 
-    var name by remember { mutableStateOf("") }
-    var quantity by remember { mutableStateOf("") }
+    val product = vm.getProduct(id).collectAsState(initial = Product()).value
+    var name by remember { mutableStateOf(product.name) }
+    var quantity by remember { mutableStateOf(product.quantity) }
     var title by remember { mutableStateOf("Inserisci Prodotto") }
     var nameButton by remember { mutableStateOf("Inserisci") }
 
     if (id != 0) {
-        LaunchedEffect(Dispatchers.IO) {
-            val product = vm.getProduct(id)
-            name = product.name
-            quantity = product.quantity
-            title = "Modifica Prodotto"
-            nameButton = "Modifica"
-        }
+        name = product.name
+        quantity = product.quantity
+        title = "Modifica Prodotto"
+        nameButton = "Modifica"
     }
 
     Scaffold(
@@ -115,9 +115,8 @@ fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, 
                 )
                 Button(
                     onClick = {
-                        val product: Product =
-                            if (id == 0) Product(name = name, quantity = quantity)
-                            else Product(id = id, name = name, quantity = quantity)
+                        product.name = name
+                        product.quantity = quantity
                         vm.insertOrUpdateProduct(product)
                         navHostController.popBackStack()
                     },

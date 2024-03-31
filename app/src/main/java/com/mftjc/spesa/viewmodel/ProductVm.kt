@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mftjc.spesa.db.ProductDb
 import com.mftjc.spesa.model.Product
+import com.mftjc.spesa.repository.ProductRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProductVm(context: Context) : ViewModel() {
@@ -13,27 +15,35 @@ class ProductVm(context: Context) : ViewModel() {
 
     private val dao = db.productDao()
 
-    val products = dao.getAllProducts()
+    private val repository = ProductRepository(dao)
 
-    suspend fun getProduct(id: Int): Product{
-        return dao.getProduct(id)
+    fun getAllProducts(): Flow<List<Product>> {
+        return repository.products
+    }
+
+    fun getProduct(id: Int): Flow<Product>{
+        return repository.getProduct(id)
     }
 
     fun insertOrUpdateProduct(product: Product){
         viewModelScope.launch {
-            dao.insertOrUpdateProduct(product)
+            repository.insertOrUpdateProduct(product)
         }
     }
 
     fun deleteProduct(product: Product){
         viewModelScope.launch {
-            dao.deleteProduct(product)
+            repository.deleteProduct(product)
         }
     }
 
+
     fun deleteAllProducts(){
         viewModelScope.launch {
-            dao.deleteAllProducts()
+            repository.deleteAllProducts()
         }
     }
+
+
+
 }
