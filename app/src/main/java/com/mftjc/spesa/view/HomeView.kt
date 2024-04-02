@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -101,14 +102,30 @@ private fun ShowListProducts(
 ){
     val products by vm.getAllProducts().collectAsState(initial = emptyList())
 
-    LazyColumn(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        items(products){ product ->
-            ProductCard(product = product, navHostController, vm)
+    //if there is no product
+    if (products.isEmpty()){
+        Box(modifier = Modifier
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Text(
+                text = "La lista è vuota.",
+                textAlign = TextAlign.Center,
+                fontSize = 25.sp,
+                color = Color.Gray
+            )
         }
+    }
+    else {
+        LazyColumn(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(products){ product ->
+                ProductCard(product = product, navHostController, vm)
+            }
 
+        }   
     }
 }
 
