@@ -1,5 +1,8 @@
 package com.mftjc.spesa.view
 
+import android.content.Context
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,13 +45,13 @@ import com.mftjc.spesa.ui.theme.Green
 import com.mftjc.spesa.ui.theme.LightGreen
 import com.mftjc.spesa.ui.theme.LightWhite
 import com.mftjc.spesa.viewmodel.ProductVm
-import kotlinx.coroutines.flow.count
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
     vm: ProductVm,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    context: Context
 ){
 
 
@@ -63,6 +66,7 @@ fun HomeView(
                 actions = {
                     IconButton(onClick = {
                         vm.deleteAllProducts()
+                        Toast.makeText(context, "Tutti i prodotti sono stati eliminati", LENGTH_SHORT).show()
                     }){
                         Icon(Icons.Filled.Delete, contentDescription = "Delete all products")
                     }
@@ -77,7 +81,7 @@ fun HomeView(
             .background(LightWhite),
             contentAlignment = Alignment.TopCenter
         ){
-            ShowListProducts(navHostController = navHostController, vm = vm)
+            ShowListProducts(navHostController = navHostController, vm = vm, context = context)
             Box(modifier = Modifier
                 .fillMaxSize()
                 .padding(15.dp),
@@ -98,7 +102,8 @@ fun HomeView(
 @Composable
 private fun ShowListProducts(
     navHostController: NavHostController,
-    vm: ProductVm
+    vm: ProductVm,
+    context: Context
 ){
     val products by vm.getAllProducts().collectAsState(initial = emptyList())
 
@@ -122,7 +127,7 @@ private fun ShowListProducts(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(products){ product ->
-                ProductCard(product = product, navHostController, vm)
+                ProductCard(product = product, navHostController, vm, context)
             }
 
         }   
@@ -133,7 +138,8 @@ private fun ShowListProducts(
 private fun ProductCard(
     product: Product,
     navHostController: NavHostController,
-    vm: ProductVm
+    vm: ProductVm,
+    context: Context
 ){
     Card(
         modifier = Modifier
@@ -178,6 +184,7 @@ private fun ProductCard(
                     }
                     IconButton(onClick = {
                         vm.deleteProduct(product)
+                        Toast.makeText(context, "Prodotto Eliminato", LENGTH_SHORT).show()
                     }) {
                         Icon(Icons.Filled.Delete, contentDescription = "Show DeleteScreenView")
                     }

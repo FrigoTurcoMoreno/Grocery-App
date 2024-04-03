@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             navHostController = rememberNavController()
-            SetupNavGraph(navHostController = navHostController, productVm = vm)
+            SetupNavGraph(navHostController = navHostController, productVm = vm, context = this)
 
         }
     }

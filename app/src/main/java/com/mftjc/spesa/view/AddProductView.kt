@@ -1,5 +1,8 @@
 package com.mftjc.spesa.view
 
+import android.content.Context
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -22,11 +24,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,11 +39,10 @@ import com.mftjc.spesa.ui.theme.Green
 import com.mftjc.spesa.ui.theme.LightGreen
 import com.mftjc.spesa.ui.theme.LightWhite
 import com.mftjc.spesa.viewmodel.ProductVm
-import kotlinx.coroutines.Dispatchers
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int){
+fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, id: Int, context: Context){
 
     var product = vm.getProduct(id).collectAsState(initial = Product()).value
     var name by remember { mutableStateOf("") }
@@ -119,11 +117,14 @@ fun AddOrUpdateProductView(vm: ProductVm, navHostController: NavHostController, 
                         if (product != null){
                             product.name = name
                             product.quantity = quantity
+                            vm.insertOrUpdateProduct(product)
+                            Toast.makeText(context, "Prodotto Modificato", LENGTH_SHORT).show()
                         }
                         else {
                             product = Product(name = name, quantity = quantity)
+                            vm.insertOrUpdateProduct(product)
+                            Toast.makeText(context, "Prodotto Inserito", LENGTH_SHORT).show()
                         }
-                        vm.insertOrUpdateProduct(product)
                         navHostController.popBackStack()
                     },
                     enabled = name.isNotBlank() && quantity.isNotBlank(),

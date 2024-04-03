@@ -1,5 +1,6 @@
 package com.mftjc.spesa.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,7 +14,8 @@ import com.mftjc.spesa.viewmodel.ProductVm
 @Composable
 fun SetupNavGraph(
     navHostController: NavHostController,
-    productVm: ProductVm
+    productVm: ProductVm,
+    context: Context
 ){
     NavHost(
         navHostController,
@@ -22,7 +24,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.HomeScreen.route
         ){
-            HomeView(vm = productVm, navHostController)
+            HomeView(vm = productVm, navHostController, context)
         }
         composable(
             route = Screen.AddOrUpdateProductScreen.route,
@@ -30,7 +32,7 @@ fun SetupNavGraph(
                 type = NavType.IntType
             })
         ){
-            AddOrUpdateProductView(vm = productVm, navHostController = navHostController, id = it.arguments!!.getInt("id"))
+            AddOrUpdateProductView(vm = productVm, navHostController = navHostController, id = it.arguments!!.getInt("id"), context)
         }
     }
 }
